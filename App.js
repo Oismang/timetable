@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Vibration } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 
 const App = () => {
@@ -26,6 +26,11 @@ const App = () => {
           </View>
         </View>
       </ViewPager>
+      <Pressable android_ripple={{color: "grey", borderless: true}} onLongPress={() => Vibration.vibrate(50)}>
+          <Text style={styles.button}>
+              skdljfslkjfslkdf
+          </Text>
+      </Pressable>
     </>
   );
 };
@@ -44,6 +49,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "red",
+  },
+  button: {
+    margin: 100,
+    backgroundColor: "blue",
+    height: 50
   }
 });
 
