@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { BLUE } from '../../constants/colors';
 
 const DayScreen = () => {
  
@@ -14,7 +15,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: BLUE
   }
 });
 

@@ -1,13 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import AppText from '../../components/apptext/apptext';
+import { BLUE } from '../../constants/colors';
 
-const ThreeDaysScreen = () => {
 
-	return (
-		<View style={styles.container}>
-      <Text>TRE DAYS SCREEN</Text>
-		</View>
-	)
+const ThreeDaysSceen = () => {
+  return (
+    <View style={styles.container}>
+      <AppText>ThreeDaysSceen</AppText>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -15,8 +17,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  }
+    backgroundColor: BLUE
+  },
 });
 
-export default ThreeDaysScreen;
-
+export default ThreeDaysSceen;

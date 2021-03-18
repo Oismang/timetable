@@ -1,46 +1,48 @@
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { DAY_SCREEN, DAY_SCREEN_ID, THREE_DAYS_SCREEN, THREE_DAYS_SCREEN_ID, WEEK_SCREEN, WEEK_SCREEN_ID, MONTH_SCREEN, MONTH_SCREEN_ID } from '../constants/sreens';
+import { WHITE, BLUE, DARK_BLUE, LIGHT_BLUE, CHROMIUM, DARK_SILVER, SILVER, LIGHT_SILVER } from '../constants/colors';
+import { DAY_SCREEN, DAY_SCREEN_ID, MONTH_SCREEN, MONTH_SCREEN_ID, THREE_DAYS_SCREEN, THREE_DAYS_SCREEN_ID, WEEK_SCREEN, WEEK_SCREEN_ID } from '../constants/sreens';
 import DayScreen from './day/DayScreen';
 import MonthScreen from './month/MonthScreen';
 import ThreeDaysScreen from './threedays/ThreeDaysScreen';
 import WeekScreen from './week/WeekScreen';
 
-
 export const navigationDefaultOptions = () => {
   Navigation.setDefaultOptions({
-    // topBar: {
-    //   visible: false,
-    //   drawBehind: true,
-    //   animate: false,
-    //   background: {
-    //     color: DARK
-    //   },
-    //   title: {
-    //     color: WHITE
-    //   },
-    //   backButton: {
-    //     color: WHITE
-    //   }
-    // },
-    // bottomTabs: {
-    //   currentTabIndex: 3,
-    //   backgroundColor: DARK,
-    //   animate: false
-    // },
-    // bottomTab: {
-    //   iconColor: WHITE,
-    //   selectedIconColor: YELLOW,
-    //   selectedTextColor: YELLOW
-    // },
-    // animations: {
-    //   push: {
-    //     enabled: false
-    //   },
-    //   pop: {
-    //     enabled: false
-    //   }
-    // }
+    topBar: {
+      visible: false,
+      drawBehind: true,
+      animate: false,
+      background: {
+        // color: DARK
+      },
+      title: {
+      },
+      backButton: {
+        // color: WHITE
+      }
+    },
+    bottomTabs: {
+      currentTabIndex: 3,
+      backgroundColor: DARK_BLUE,
+      animate: false,
+      barStyle: {
+        
+      }
+    },
+    bottomTab: {
+      iconColor: DARK_SILVER,
+      selectedIconColor: LIGHT_SILVER,
+      selectedTextColor: LIGHT_SILVER
+    },
+    animations: {
+      push: {
+        enabled: false
+      },
+      pop: {
+        enabled: false
+      }
+    }
   });
 }
 
