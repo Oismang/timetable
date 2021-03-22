@@ -1,6 +1,4 @@
-export const getDaysInMonth = (month, year) => {
-  return new Date(year, month + 1, 0).getDate();
-};
+import { getDaysInMonth } from "./common";
 
 export const getFirstDayOfMonth = (month, year) => {
   const day = new Date(year, month, 1).getDay();
@@ -37,7 +35,7 @@ export const getMonthCalendar = (month, year) => {
   return days;
 }
 
-export const calcNewDate = (currentDate, monthOffset) => {
+export const calcNewMonth = (currentDate, monthOffset) => {
   const { month, year } = currentDate;
   const date = new Date(year, month);
 

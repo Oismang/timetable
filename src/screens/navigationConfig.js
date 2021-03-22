@@ -32,6 +32,7 @@ export const navigationDefaultOptions = () => {
     },
     bottomTab: {
       iconColor: DARK_SILVER,
+      fontFamily: "Lora-VariableFont_wght",
       selectedIconColor: LIGHT_SILVER,
       selectedTextColor: LIGHT_SILVER
     },
@@ -114,7 +115,7 @@ export const mainRoot = async () => {
               options: {
                 bottomTab: {
                   text: 'неделя',
-                  icon: icons[2]
+                  icon: icons[2],
                 }
               }
             }

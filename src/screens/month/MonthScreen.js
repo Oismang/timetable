@@ -6,7 +6,7 @@ import IconButton, { IconTypes } from '../../components/iconbutton/iconbutton';
 import { BLUE, DARK_BLUE, DARK_SILVER, LIGHT_BLUE, LIGHT_SILVER, SILVER } from '../../constants/colors';
 import { DAYS_OF_WEEK, MONTH } from '../../constants/common';
 import { MONTH_CALENDAR_HEIGHT, MONTH_CALENDAR_WIDTH, TOP_PADDING } from '../../constants/sizes';
-import { calcNewDate, getMonthCalendar } from '../../utils/monthUtils';
+import { calcNewMonth, getMonthCalendar } from '../../utils/monthUtils';
 import DayCell from './DayCell';
 
 const dateNow = new Date();
@@ -25,7 +25,7 @@ const MonthScreen = (props) => {
   }
 
   const renderHeader = () => {
-    const displayDate = calcNewDate(currentDate, data[1]);
+    const displayDate = calcNewMonth(currentDate, data[1]);
 
     return (
       <View style={styles.headerYearContainer}>
@@ -51,7 +51,7 @@ const MonthScreen = (props) => {
 
   const renderCalendar = () => {
     const items = data.map(number => {
-      const { month, year } = calcNewDate(currentDate, number);
+      const { month, year } = calcNewMonth(currentDate, number);
       return getMonthCalendar(month, year);
     });
 
