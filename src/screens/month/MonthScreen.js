@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import AppSwiper from '../../components/appswiper/appswiper';
-import AppText from '../../components/apptext/apptext';
-import IconButton, { IconTypes } from '../../components/iconbutton/iconbutton';
+import AppSwiper from '../../components/appswiper/AppSwiper';
+import AppText from '../../components/apptext/AppText';
+import DisplayDate from '../../components/displaydate/DisplayDate';
+import IconButton, { IconTypes } from '../../components/iconbutton/IconButton';
 import { BLUE, DARK_BLUE, DARK_SILVER, LIGHT_BLUE, LIGHT_SILVER, SILVER } from '../../constants/colors';
-import { DAYS_OF_WEEK, MONTH } from '../../constants/common';
+import { DAYS_OF_WEEK, MONTHS } from '../../constants/common';
 import { MONTH_CALENDAR_HEIGHT, MONTH_CALENDAR_WIDTH, TOP_PADDING } from '../../constants/sizes';
 import { calcNewMonth, getMonthCalendar } from '../../utils/monthUtils';
 import DayCell from './DayCell';
@@ -28,13 +29,9 @@ const MonthScreen = (props) => {
     const displayDate = calcNewMonth(currentDate, data[1]);
 
     return (
-      <View style={styles.headerYearContainer}>
-        <IconButton onPress={() => onSwipe(-1)} iconName={IconTypes.LEFT} color={LIGHT_SILVER} />
-        <AppText style={styles.headerYearText}>
-          {`${MONTH[displayDate.month]} ${displayDate.year} г.`}
-        </AppText>
-        <IconButton onPress={() => onSwipe(1)} iconName={IconTypes.RIGHT} color={LIGHT_SILVER} />
-      </View>
+      <DisplayDate onSwipe={onSwipe}>
+        {`${MONTHS[displayDate.month]} ${displayDate.year} г.`}
+      </DisplayDate>
     )
   }
 
@@ -106,20 +103,9 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
   },
-  headerYearContainer: {
-    marginBottom: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  headerYearText: {
-    fontSize: 22
-  },
   headerDaysContainer: {
     width: "100%",
+    marginTop: 10,
     paddingLeft: 20,
     paddingRight: 20,
     flexDirection: "row",

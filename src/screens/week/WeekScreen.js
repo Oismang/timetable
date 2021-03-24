@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import AppSwiper from '../../components/appswiper/appswiper';
-import AppText from '../../components/apptext/apptext';
-import IconButton, { IconTypes } from '../../components/iconbutton/iconbutton';
+import AppSwiper from '../../components/appswiper/AppSwiper';
+import AppText from '../../components/apptext/AppText';
+import DisplayDate from '../../components/displaydate/DisplayDate';
+import IconButton, { IconTypes } from '../../components/iconbutton/IconButton';
 import { BLUE, LIGHT_BLUE, LIGHT_SILVER } from '../../constants/colors';
+import { WEEK_DAYS_COUNT } from '../../constants/common';
 import { TOP_PADDING, WEEK_CALENDAR_HEIGHT, WEEK_CALENDAR_WIDTH } from '../../constants/sizes';
-import { getMonthText, getWeekCalendar } from '../../utils/weekUtils';
+import { getMonthTextForWeek, getWeekCalendar } from '../../utils/weekUtils';
 import DayLine from './DayLine';
 
 const dateNow = new Date();
@@ -19,20 +21,18 @@ const WeekScreen = () => {
   }
 
   const renderHeader = () => {
-    const date = new Date(new Date().setDate(dateNow.getDate() + data[1] * 7));
+    const date = new Date(new Date().setDate(dateNow.getDate() + data[1] * WEEK_DAYS_COUNT));
 
     return (
-      <View style={styles.headerContainer}>
-        <IconButton onPress={() => onSwipe(-1)} iconName={IconTypes.LEFT} color={LIGHT_SILVER} />
-        <AppText style={styles.headerText}>{`${getMonthText(date)} ${date.getFullYear()} г.`}</AppText>
-        <IconButton onPress={() => onSwipe(1)} iconName={IconTypes.RIGHT} color={LIGHT_SILVER} />
-      </View>
+      <DisplayDate onSwipe={onSwipe}>
+        {`${getMonthTextForWeek(date)} ${date.getFullYear()} г.`}
+      </DisplayDate>
     )
   }
 
   const renderCalendar = () => {
     const items = data.map(number => {
-      const date = new Date().setDate(dateNow.getDate() + number * 7);
+      const date = new Date().setDate(dateNow.getDate() + number * WEEK_DAYS_COUNT);
       return getWeekCalendar(new Date(date));
     });
 
@@ -79,17 +79,6 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 20,
     backgroundColor: LIGHT_BLUE
-  },
-  headerContainer: {
-    paddingLeft: 20,
-    paddingRight: 20,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  headerText: {
-    fontSize: 22
   }
 });
 

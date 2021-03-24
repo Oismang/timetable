@@ -1,26 +1,24 @@
 import { MONTHS } from "../constants/common";
 import { getDaysInMonth } from "./common";
 
-export const getWeekCalendar = (date) => {
-  let week = [];
+export const getThreeDaysCalendar = (date) => {
+  let days = [];
 
-  date.setDate((date.getDate() - date.getDay() + 1));
-  for (let i = 0; i < 7; i++) {
-    week.push(new Date(date).getDate());
+  for (let i = 0; i < 3; i++) {
+    days.push(new Date(date).getDate());
     date.setDate(date.getDate() + 1);
   }
 
-  return week;
+  return days;
 }
 
-export const getMonthTextForWeek = (date) => {
+export const getMonthTextForThreeDays = (date) => {
   const daysInMonth = getDaysInMonth(date.getMonth(), date.getFullYear());
-  const firstDayOfWeek = date.getDate() - date.getDay() + 1;
 
   const currentMonth = date.getMonth();
   const nextMonth = new Date(new Date().setMonth(currentMonth + 1)).getMonth();
 
-  if (firstDayOfWeek + 6 > daysInMonth) {
+  if (date.getDate() + 2 > daysInMonth) {
     return `${MONTHS[currentMonth]}-${MONTHS[nextMonth]}`
   }
   return MONTHS[currentMonth];

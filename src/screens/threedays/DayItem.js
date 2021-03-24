@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import AppText from '../../components/apptext/AppText';
 import { BLUE, DARK_BLUE, LIGHT_SILVER } from '../../constants/colors';
-import { COUNT_OF_DAYS, DAYS_OF_WEEK } from '../../constants/common';
+import { COUNT_OF_DAYS, DAYS_OF_WEEK, THREE_DAYS_COUNT } from '../../constants/common';
 
-const DayLine = ({ day, isCurrentDay, dayIndex }) => {
+const DayItem = ({ day, isCurrentDay, dayIndex }) => {
   const currentDayStyles = isCurrentDay ? styles.currentDay : {};
 
   return (
@@ -18,7 +18,7 @@ const DayLine = ({ day, isCurrentDay, dayIndex }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: `${100 / COUNT_OF_DAYS}%`,
+    height: `${100 / THREE_DAYS_COUNT}%`,
     flexDirection: "row",
     alignItems: "center",
     borderBottomColor: BLUE,
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DayLine;
+export default DayItem;

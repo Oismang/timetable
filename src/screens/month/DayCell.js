@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import AppText from '../../components/apptext/apptext';
+import AppText from '../../components/apptext/AppText';
 import { BLUE, DARK_BLUE, DARK_SILVER, LIGHT_SILVER } from '../../constants/colors';
 import { COUNT_OF_DAYS, COUNT_OF_WEEKS } from '../../constants/common';
 
