@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import AppSwiper from '../../components/appswiper/AppSwiper';
-import AppText from '../../components/apptext/AppText';
 import DisplayDate from '../../components/displaydate/DisplayDate';
-import IconButton, { IconTypes } from '../../components/iconbutton/IconButton';
-import { BLUE, LIGHT_BLUE, LIGHT_SILVER } from '../../constants/colors';
+import { BLUE, LIGHT_BLUE } from '../../constants/colors';
 import { THREE_DAYS_COUNT } from '../../constants/common';
 import { THREE_DAYS_CALENDAR_HEIGHT, THREE_DAYS_CALENDAR_WIDTH, TOP_PADDING } from '../../constants/sizes';
 import { getMonthTextForThreeDays, getThreeDaysCalendar } from '../../utils/threeDaysUtils';
+import { AddModal } from '../common/modals';
 import DayItem from './DayItem';
 
 const dateNow = new Date();
@@ -15,6 +14,8 @@ const initialState = [-1, 0, 1];
 
 const ThreeDaysSceen = () => {
   const [data, setData] = useState(initialState);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalCurrentDate, setModalCurrentDate] = useState(null);
 
   const onSwipe = (direction) => {
     setData(prevData => prevData.map(number => number + direction));
@@ -41,12 +42,14 @@ const ThreeDaysSceen = () => {
         <View style={styles.calendarItem}>
           {days.map((day, dayIndex) => (
             <DayItem key={dayIndex}
+              {...day}
               dayIndex={
                 new Date(new Date().setDate(dateNow.getDate() + data[daysIndex] * THREE_DAYS_COUNT + dayIndex - 1))
                   .getDay()
               }
-              isCurrentDay={data[daysIndex] === 0 && dateNow.getDate() === day}
-              day={day}
+              setIsModalVisible={setIsModalVisible}
+              setModalCurrentDate={setModalCurrentDate}
+              isCurrentDay={data[daysIndex] === 0 && dateNow.getDate() === day.day}
             />
           ))}
         </View>
@@ -63,6 +66,10 @@ const ThreeDaysSceen = () => {
         height={THREE_DAYS_CALENDAR_HEIGHT}>
         {renderCalendar()}
       </AppSwiper>
+
+      <AddModal isVisible={isModalVisible}
+        setIsVisible={setIsModalVisible}
+        currentDate={modalCurrentDate} />
     </View>
   )
 }

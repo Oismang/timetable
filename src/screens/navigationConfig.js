@@ -1,6 +1,6 @@
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { WHITE, BLUE, DARK_BLUE, LIGHT_BLUE, CHROMIUM, DARK_SILVER, SILVER, LIGHT_SILVER } from '../constants/colors';
+import { DARK_BLUE, DARK_SILVER, LIGHT_SILVER } from '../constants/colors';
 import { DAY_SCREEN, DAY_SCREEN_ID, MONTH_SCREEN, MONTH_SCREEN_ID, THREE_DAYS_SCREEN, THREE_DAYS_SCREEN_ID, WEEK_SCREEN, WEEK_SCREEN_ID } from '../constants/sreens';
 import DayScreen from './day/DayScreen';
 import MonthScreen from './month/MonthScreen';

@@ -1,32 +1,33 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import AppSwiper from '../../components/appswiper/AppSwiper';
 import AppText from '../../components/apptext/AppText';
 import DisplayDate from '../../components/displaydate/DisplayDate';
-import IconButton, { IconTypes } from '../../components/iconbutton/IconButton';
-import { BLUE, DARK_BLUE, DARK_SILVER, LIGHT_BLUE, LIGHT_SILVER, SILVER } from '../../constants/colors';
+import { BLUE, DARK_SILVER, LIGHT_BLUE } from '../../constants/colors';
 import { DAYS_OF_WEEK, MONTHS } from '../../constants/common';
 import { MONTH_CALENDAR_HEIGHT, MONTH_CALENDAR_WIDTH, TOP_PADDING } from '../../constants/sizes';
 import { calcNewMonth, getMonthCalendar } from '../../utils/monthUtils';
+import { AddModal } from '../common/modals'
 import DayCell from './DayCell';
 
-const dateNow = new Date();
-const currentDate = {
-  month: dateNow.getMonth(),
-  year: dateNow.getFullYear()
+const dateNow = {
+  month: new Date().getMonth(),
+  year: new Date().getFullYear()
 }
 
 const initialState = [-1, 0, 1];
 
-const MonthScreen = (props) => {
+const MonthScreen = () => {
   const [data, setData] = useState(initialState);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalCurrentDate, setModalCurrentDate] = useState(null);
 
   const onSwipe = (direction) => {
     setData(prevData => prevData.map(number => number + direction));
   }
 
   const renderHeader = () => {
-    const displayDate = calcNewMonth(currentDate, data[1]);
+    const displayDate = calcNewMonth(dateNow, data[1]);
 
     return (
       <DisplayDate onSwipe={onSwipe}>
@@ -46,24 +47,29 @@ const MonthScreen = (props) => {
       )}
     </View>
 
-  const renderCalendar = () => {
-    const items = data.map(number => {
-      const { month, year } = calcNewMonth(currentDate, number);
-      return getMonthCalendar(month, year);
-    });
+  const calendar = useMemo(
+    () => {
+      const items = data.map(number => {
+        const { month, year } = calcNewMonth(dateNow, number);
+        return getMonthCalendar(month, year);
+      })
 
-    return items.map((month, monthIndex) =>
-      <View key={monthIndex} style={styles.calendarItemContainer}>
-        <View style={styles.calendarItem}>
-          {month.map((day, dayIndex) =>
-            <DayCell key={dayIndex}
-              {...day}
-              isCurrentDay={data[monthIndex] === 0 && dateNow.getDate() === day.dayNumber} />
-          )}
+      return items.map((month, monthIndex) =>
+        <View key={monthIndex} style={styles.calendarItemContainer}>
+          <View style={styles.calendarItem}>
+            {month.map((day, dayIndex) =>
+                <DayCell key={dayIndex}
+                  {...day}
+                  setIsModalVisible={setIsModalVisible}
+                  setModalCurrentDate={setModalCurrentDate}
+                  isCurrentDay={data[monthIndex] === 0 && day.monthOffset === 0 && new Date().getDate() === day.day} />
+              )}
+          </View>
         </View>
-      </View>
-    )
-  }
+      )
+    },
+    [data]
+  );
 
   return (
     <View style={styles.container}>
@@ -74,8 +80,12 @@ const MonthScreen = (props) => {
         width={MONTH_CALENDAR_WIDTH}
         height={MONTH_CALENDAR_HEIGHT}
       >
-        {renderCalendar()}
+        {calendar}
       </AppSwiper>
+
+      <AddModal isVisible={isModalVisible}
+        setIsVisible={setIsModalVisible}
+        currentDate={modalCurrentDate} />
     </View>
   )
 }

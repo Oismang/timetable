@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import AppSwiper from '../../components/appswiper/AppSwiper';
-import AppText from '../../components/apptext/AppText';
 import DisplayDate from '../../components/displaydate/DisplayDate';
-import IconButton, { IconTypes } from '../../components/iconbutton/IconButton';
-import { BLUE, LIGHT_BLUE, LIGHT_SILVER } from '../../constants/colors';
+import { BLUE, LIGHT_BLUE } from '../../constants/colors';
 import { MONTHS } from '../../constants/common';
 import { ONE_DAY_CALENDAR_HEIGHT, ONE_DAY_CALENDAR_WIDTH, TOP_PADDING } from '../../constants/sizes';
+import { datediff } from '../../utils/common';
 import OneDay from './OneDay';
 
 const dateNow = new Date();
 const initialState = [-1, 0, 1];
 
-const DayScreen = () => {
+const DayScreen = ({ currentDate }) => {
   const [data, setData] = useState(initialState);
+
+  useEffect(() => {
+    if (currentDate) {
+      const diff = datediff(dateNow, currentDate);
+      setData(prevData => prevData.map((_, i) => diff + i - 1));
+    }
+  }, [currentDate]);
 
   const onSwipe = (direction) => {
     setData(prevData => prevData.map(number => number + direction));
@@ -31,14 +37,21 @@ const DayScreen = () => {
 
   const renderCalendar = () => {
     const items = data.map(number => {
-      const date = new Date().setDate(dateNow.getDate() + number);
-      return new Date(date).getDate();
+      const date = new Date(new Date().setDate(dateNow.getDate() + number));
+      return {
+        day: date.getDate(),
+        currentDate: new Date(date),
+        dayOfWeek: new Date(date.setDate(date.getDate() - 1)).getDay(),
+      };
     });
 
     return items.map((day, daysIndex) =>
       <View key={daysIndex} style={styles.calendarItemContainer}>
         <View style={styles.calendarItem}>
-          <OneDay day={day} />
+          <OneDay
+            {...day}
+            isCurrentDay={data[daysIndex] === 0}
+          />
         </View>
       </View>
     )

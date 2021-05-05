@@ -5,7 +5,10 @@ export const getThreeDaysCalendar = (date) => {
   let days = [];
 
   for (let i = 0; i < 3; i++) {
-    days.push(new Date(date).getDate());
+    days.push({
+      day: new Date(date).getDate(),
+      currentDate: new Date(date)
+    })
     date.setDate(date.getDate() + 1);
   }
 

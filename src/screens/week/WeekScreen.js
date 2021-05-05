@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import AppSwiper from '../../components/appswiper/AppSwiper';
-import AppText from '../../components/apptext/AppText';
 import DisplayDate from '../../components/displaydate/DisplayDate';
-import IconButton, { IconTypes } from '../../components/iconbutton/IconButton';
-import { BLUE, LIGHT_BLUE, LIGHT_SILVER } from '../../constants/colors';
+import { BLUE, LIGHT_BLUE } from '../../constants/colors';
 import { WEEK_DAYS_COUNT } from '../../constants/common';
 import { TOP_PADDING, WEEK_CALENDAR_HEIGHT, WEEK_CALENDAR_WIDTH } from '../../constants/sizes';
 import { getMonthTextForWeek, getWeekCalendar } from '../../utils/weekUtils';
+import { AddModal } from '../common/modals';
 import DayLine from './DayLine';
 
 const dateNow = new Date();
@@ -15,6 +14,8 @@ const initialState = [-1, 0, 1];
 
 const WeekScreen = () => {
   const [data, setData] = useState(initialState);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalCurrentDate, setModalCurrentDate] = useState(null);
 
   const onSwipe = (direction) => {
     setData(prevData => prevData.map(number => number + direction));
@@ -41,9 +42,11 @@ const WeekScreen = () => {
         <View style={styles.calendarItem}>
           {week.map((day, dayIndex) => (
             <DayLine key={dayIndex}
+              {...day}
               dayIndex={dayIndex}
-              isCurrentDay={data[weekIndex] === 0 && dateNow.getDate() === day}
-              day={day}
+              setIsModalVisible={setIsModalVisible}
+              setModalCurrentDate={setModalCurrentDate}
+              isCurrentDay={data[weekIndex] === 0 && dateNow.getDate() === day.day}
             />
           ))}
         </View>
@@ -60,6 +63,10 @@ const WeekScreen = () => {
         height={WEEK_CALENDAR_HEIGHT}>
         {renderCalendar()}
       </AppSwiper>
+
+      <AddModal isVisible={isModalVisible}
+        setIsVisible={setIsModalVisible}
+        currentDate={modalCurrentDate} />
     </View>
   )
 }

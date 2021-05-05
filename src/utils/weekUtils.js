@@ -6,7 +6,10 @@ export const getWeekCalendar = (date) => {
 
   date.setDate((date.getDate() - date.getDay() + 1));
   for (let i = 0; i < 7; i++) {
-    week.push(new Date(date).getDate());
+    week.push({
+      day: new Date(date).getDate(),
+      currentDate: new Date(date)
+    });
     date.setDate(date.getDate() + 1);
   }
 

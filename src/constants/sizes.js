@@ -2,6 +2,9 @@ import { Dimensions } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
+export const screenWidth = width;
+export const screenHeight = height;
+
 export const TOP_PADDING = height * 0.05;
 
 export const ONE_DAY_CALENDAR_WIDTH = width;

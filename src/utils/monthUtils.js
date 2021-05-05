@@ -16,18 +16,21 @@ export const getMonthCalendar = (month, year) => {
   const days = Array.from(new Array(42), (_, i) => {
     if (i < firstDayOfMonth) {
       return {
-        dayNumber: previousMonthDays - firstDayOfMonth + i + 1,
-        monthOffset: -1
+        day: previousMonthDays - firstDayOfMonth + i + 1,
+        monthOffset: -1,
+        currentDate: new Date(year, month - 1, previousMonthDays - firstDayOfMonth + i + 2)
       }
     } else if (i >= firstDayOfMonth && currentDaysCounter <= currentMonthDays) {
       return {
-        dayNumber: currentDaysCounter++,
-        monthOffset: 0
+        day: currentDaysCounter++,
+        monthOffset: 0,
+        currentDate: new Date(year, month, currentDaysCounter)
       }
     } else {
       return {
-        dayNumber: lastDaysCounter++,
-        monthOffset: 1
+        day: lastDaysCounter++,
+        monthOffset: 1,
+        currentDate: new Date(year, month + 1, lastDaysCounter)
       }
     }
   });

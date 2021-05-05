@@ -1,17 +1,48 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, Vibration, View } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import AppText from '../../components/apptext/AppText';
 import { BLUE, DARK_BLUE, LIGHT_SILVER } from '../../constants/colors';
-import { COUNT_OF_DAYS, DAYS_OF_WEEK } from '../../constants/common';
+import { BUTTON_VIBRATION_DURATION, COUNT_OF_DAYS, DAYS_OF_WEEK } from '../../constants/common';
+import { DAY_SCREEN_ID, WEEK_SCREEN_ID } from '../../constants/sreens';
 
-const DayLine = ({ day, isCurrentDay, dayIndex }) => {
+const DayLine = ({ day, isCurrentDay, dayIndex, currentDate,
+  setIsModalVisible, setModalCurrentDate }) => {
   const currentDayStyles = isCurrentDay ? styles.currentDay : {};
+
+  const onPress = () => {
+    Navigation.mergeOptions(WEEK_SCREEN_ID, {
+      bottomTabs: {
+        currentTabId: DAY_SCREEN_ID
+      }
+    });
+    Navigation.updateProps(DAY_SCREEN_ID, {
+      currentDate: currentDate
+    });
+  }
+
+  const onLongPress = () => {
+    Vibration.vibrate(BUTTON_VIBRATION_DURATION);
+    setIsModalVisible(true);
+    setModalCurrentDate(currentDate);
+  }
 
   return (
     <View style={{ ...styles.container, ...currentDayStyles }}>
       <AppText style={{ ...currentDayStyles, ...styles.dayOfWeek }}>{DAYS_OF_WEEK[dayIndex]}</AppText>
       <View style={styles.verticalLine} />
-      <AppText style={{ ...currentDayStyles, ...styles.day }}>{day}</AppText>
+      <Pressable
+        onPress={onPress}
+        onLongPress={onLongPress}
+        hitSlop={{
+          bottom: 25,
+          left: 50,
+          right: 300,
+          top: 25
+        }}
+      >
+        <AppText style={{ ...currentDayStyles, ...styles.day }}>{day}</AppText>
+      </Pressable>
     </View>
   )
 }
